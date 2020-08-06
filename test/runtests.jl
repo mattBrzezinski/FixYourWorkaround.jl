@@ -1,4 +1,4 @@
-using FYW
+using FixYourWorkaround
 using Test
 
 package_name = "package"

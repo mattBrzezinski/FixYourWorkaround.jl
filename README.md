@@ -1,4 +1,4 @@
-## FYW.jl (Fix Your Workaround)
+## Fix Your Workaround.jl
 
 Have you ever created a work around because of a specific dependency version?
 This package is a test utility to ensure you remember to fix your workaround after support for it has been dropped.
@@ -6,7 +6,7 @@ This package is a test utility to ensure you remember to fix your workaround aft
 Whenever you create a workaround and plan to remove it after you drop version support for a package create a new test like so:
 
 ```julia
-using FYW
+using FixYourWorkaround
 
 @test test_package_version("Package", "Version")
 ```

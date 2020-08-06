@@ -1,4 +1,4 @@
-module FYW
+module FixYourWorkaround
 
 using Pkg
 using Pkg.Types: VersionSpec, semver_spec
