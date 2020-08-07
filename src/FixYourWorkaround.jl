@@ -4,7 +4,7 @@ using Pkg
 using Pkg.Types: VersionSpec, semver_spec
 using Test
 
-export test_package_version
+export package_compatible
 export CompatNotFound, PackageNotInCompat, VersionNotCompatible
 
 struct CompatNotFound <: Exception
@@ -23,7 +23,7 @@ end
 show(io::IO, e::VersionNotCompatible) = println(io, e.message)
 
 """
-    test_package_version(package_name::String, version::String)
+    package_compatible(package_name::String, version::String)
 
 Check to see if package_name@version is inbounds with the compat section in your Project.toml
 
@@ -42,7 +42,7 @@ Check to see if package_name@version is inbounds with the compat section in your
 - `CompatNotFound`: Compat section not found in the Project.toml
 - `VersionOutsideSpec`: Version is no longer inbounds of the compat versions
 """
-function test_package_version(package_name::String, version::String; toml_path=joinpath(@__DIR__, "..", "Project.toml"))
+function package_compatible(package_name::String, version::String; toml_path=joinpath(@__DIR__, "..", "Project.toml"))
     version = VersionSpec(version)
     toml = Pkg.TOML.parsefile(toml_path)
 
@@ -61,10 +61,12 @@ function test_package_version(package_name::String, version::String; toml_path=j
     else
         throw(CompatNotFound("Compat section not found in Project.toml"))
     end
+
+    return false
 end
 
-test_package_version(package_name::String, version::Int64; kwargs...) = test_package_version(package_name, string(version); kwargs...)
-test_package_version(package_name::String, version::Float64; kwargs...) = test_package_version(package_name, string(version); kwargs...)
-test_package_version(package_name::String, version::VersionNumber; kwargs...) = test_package_version(package_name, string(version); kwargs...)
+package_compatible(package_name::String, version::Int64; kwargs...) = package_compatible(package_name, string(version); kwargs...)
+package_compatible(package_name::String, version::Float64; kwargs...) = package_compatible(package_name, string(version); kwargs...)
+package_compatible(package_name::String, version::VersionNumber; kwargs...) = package_compatible(package_name, string(version); kwargs...)
 
 end  # module

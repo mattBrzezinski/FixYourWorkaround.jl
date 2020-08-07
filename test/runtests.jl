@@ -9,13 +9,13 @@ toml_path = joinpath(dir, "Project.toml")
     @testset "CompatNotFound" begin
         write(toml_path, "")
 
-        @test_throws CompatNotFound test_package_version(package_name, "0.0"; toml_path=toml_path)
+        @test_throws CompatNotFound package_compatible(package_name, "0.0"; toml_path=toml_path)
     end
 
     @testset "PackageNotInCompat" begin
         write(toml_path, "[compat]")
 
-        @test_throws PackageNotInCompat test_package_version(package_name, "0.0"; toml_path=toml_path)
+        @test_throws PackageNotInCompat package_compatible(package_name, "0.0"; toml_path=toml_path)
     end 
 end
 
@@ -28,7 +28,7 @@ end
         """
     )
 
-    @test_throws VersionNotCompatible test_package_version(package_name, "0.0"; toml_path=toml_path)
+    @test_throws VersionNotCompatible package_compatible(package_name, "0.0"; toml_path=toml_path)
 end
 
 @testset "Package in Versions" begin
@@ -40,7 +40,7 @@ end
         """
     )
 
-    @test test_package_version(package_name, "1.1"; toml_path=toml_path)
+    @test package_compatible(package_name, "1.1"; toml_path=toml_path)
 end
 
 @testset "Version::Int64" begin
@@ -52,7 +52,7 @@ end
         """
     )
 
-    @test test_package_version(package_name, 1; toml_path=toml_path)
+    @test package_compatible(package_name, 1; toml_path=toml_path)
 end
 
 @testset "Version::Float64" begin
@@ -64,7 +64,7 @@ end
         """
     )
 
-    @test test_package_version(package_name, 1.0; toml_path=toml_path)
+    @test package_compatible(package_name, 1.0; toml_path=toml_path)
 end
 
 @testset "Version::VersionNumber" begin
@@ -76,5 +76,5 @@ end
         """
     )
 
-    @test test_package_version(package_name, v"1"; toml_path=toml_path)
+    @test package_compatible(package_name, v"1"; toml_path=toml_path)
 end
