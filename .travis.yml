@@ -1,0 +1,14 @@
+# Documentation: http://docs.travis-ci.com/user/languages/julia/
+language: julia
+os:
+  - linux
+  - osx
+julia:
+  - 1.0  # LTS
+  - 1  # Latest Stable
+  - nightly
+matrix:
+  allow_failures:
+    - julia: nightly
+after_success:
+  - julia -e 'using Pkg; Pkg.add("Coverage"); using Coverage; Coveralls.submit(Coveralls.process_folder())'
