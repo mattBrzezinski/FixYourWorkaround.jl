@@ -8,7 +8,7 @@ Whenever you create a workaround and plan to remove it after you drop version su
 ```julia
 using FixYourWorkaround
 
-@test test_package_version("Package", "Version")
+@test package_compatible("Package", "Version")
 ```
 
 In the future when you remove the version from the `compat` section of your Project.toml this test will fail and remind you to remove your workaround.
