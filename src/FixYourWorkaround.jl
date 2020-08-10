@@ -10,17 +10,17 @@ export CompatNotFound, PackageNotInCompat, VersionNotCompatible
 struct CompatNotFound <: Exception
     message::String
 end
-show(io::IO, e::CompatNotFound) = println(io, e.message)
+Base.showerror(io::IO, e::CompatNotFound) = println(io, e.message)
 
 struct PackageNotInCompat <: Exception
     message::String
 end
-show(io::IO, e::PackageNotInCompat) = println(io, e.message)
+Base.showerror(io::IO, e::PackageNotInCompat) = println(io, e.message)
 
 struct VersionNotCompatible <: Exception
     message::String
 end
-show(io::IO, e::VersionNotCompatible) = println(io, e.message)
+Base.showerror(io::IO, e::VersionNotCompatible) = println(io, e.message)
 
 """
     package_compatible(package_name::String, version::String)
